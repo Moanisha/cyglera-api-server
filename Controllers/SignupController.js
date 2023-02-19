@@ -2,29 +2,74 @@ const { encryptPwd } = require("../util/cryptFunc");
 const db = require("../Model");
 
 const User = db.users;
+const Dietician = db.dieticians;
 
 const SignupController = async (req, res) => {
-  const { email, password, name, userRole } = req.body;
+  const {
+    email,
+    password,
+    firstName,
+    userRole,
+    lastName,
+    address,
+    city,
+    country,
+    postalCode,
+    phone,
+    province,
+    gender,
+    agreementSigned,
+    height,
+    weight,
+    languages,
+    yearsOfExperience,
+    education,
+    occupation,
+    areaOfFocus,
+    professionalSummary,
+    professionalApproach,
+  } = req.body;
+  console.log(languages, yearsOfExperience);
   try {
-    const userFound = await User.findOne({ email });
-    if (userFound) {
-      return res
-        .status(400)
-        .send({ type: "error", msg: "No duplicate entity allowed" });
-    }
     //now hash pwd
     const hashedPwd = await encryptPwd(password);
     //now save to DB
     const createUser = await User.create({
-      name,
-      email,
       password: hashedPwd,
+      email,
+      firstName,
       userRole,
+      lastName,
+      address,
+      city,
+      country,
+      postalCode,
+      phone,
+      province,
+      gender,
+      agreementSigned,
     });
     if (!createUser || createUser.length < 1) {
       return res
         .status(401)
         .send({ type: "error", msg: "Couldn't create User" });
+    }
+    if (createUser) {
+      if (userRole == "DIETICIAN") {
+        let UserId = createUser.id;
+        await Dietician.create({
+          UserId,
+          height,
+          weight,
+          languages,
+          yearsOfExperience,
+          education,
+          occupation,
+          areaOfFocus,
+          professionalSummary,
+          professionalApproach,
+        });
+      }
     }
 
     res.send({ msg: "User created Successfully", type: "success" });
