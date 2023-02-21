@@ -4,11 +4,12 @@ const db = require("../Model");
 
 const User = db.users;
 const SigninController = async (req, res) => {
-  const { email, password } = req.body;
+  const { password, email } = req.body;
 
   try {
     //check whetehr user with email exists
     const userFound = await User.findOne({ email });
+    console.log(userFound);
     if (!userFound) {
       return res
         .status(400)
@@ -23,17 +24,23 @@ const SigninController = async (req, res) => {
     }
     //userFound,now send jwt
     const payload = {
-      name: userFound.name,
-      email,
-      employeeId: userFound.employeeId,
-      userRole: userFound.userRole,
-      userId: userFound._id,
-      accountVerified: userFound.isVerified,
+      email: userFound.dataValues.email,
+      firstName: userFound.dataValues.firstName,
+      userRole: userFound.dataValues.userRole,
+      lastName: userFound.dataValues.lastName,
+      address: userFound.dataValues.address,
+      city: userFound.dataValues.city,
+      country: userFound.dataValues.country,
+      postalCode: userFound.dataValues.postalCode,
+      phone: userFound.dataValues.phone,
+      province: userFound.dataValues.province,
+      gender: userFound.dataValues.gender,
+      agreementSigned: userFound.dataValues.agreementSigned,
     };
     const tokenGenerated = signToken(payload);
     //send token + data to client
     res.send({
-      msg: `Welcome ${userFound.name}`,
+      msg: `Welcome ${userFound.dataValues.firstName}`,
       type: "success",
       tokenGenerated,
       userData: payload,

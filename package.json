@@ -6,8 +6,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "migrate": "sequelize db:migrate",
-    "seeds": "sequelize db:seed:all",
-    "setup-db": "Createdb -h localhost -U postgres cyglera-api-server"
+    "seeds": "sequelize db:seed:all"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

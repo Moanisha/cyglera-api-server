@@ -27,5 +27,7 @@ db.sequelize = sequelize;
 //connecting to model
 db.users = require("./User")(sequelize, DataTypes);
 db.dieticians = require("./Dietician")(sequelize, DataTypes);
+db.clients = require("./Client")(sequelize, DataTypes);
+
 //exporting the module
 module.exports = db;

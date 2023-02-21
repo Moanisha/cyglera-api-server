@@ -46,7 +46,7 @@ module.exports = {
       },
       languages: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.JSON,
       },
       occupation: {
         allowNull: false,
