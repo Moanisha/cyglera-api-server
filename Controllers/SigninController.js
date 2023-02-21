@@ -5,10 +5,11 @@ const db = require("../Model");
 const User = db.users;
 const SigninController = async (req, res) => {
   const { password, email } = req.body;
-
+  console.log(email);
   try {
     //check whetehr user with email exists
-    const userFound = await User.findOne({ email });
+    const userFound = await User.findOne({ where: { email } });
+
     console.log(userFound);
     if (!userFound) {
       return res
