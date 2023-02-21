@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(cors({ origin: "*" }));
 
 //synchronizing the database and forcing it to false so we dont lose data
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ force: false, alter: true }).then(() => {
   console.log("db has been re sync");
 });
 app.use("/api/auth", authRoutes);

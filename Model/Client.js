@@ -1,4 +1,4 @@
-//Dietician model
+//CLient model
 module.exports = (sequelize, DataTypes) => {
   const Client = sequelize.define(
     "Client",

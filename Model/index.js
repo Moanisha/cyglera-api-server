@@ -1,10 +1,6 @@
 //importing modules
 const { Sequelize, DataTypes } = require("sequelize");
 
-const fs = require("fs");
-//Database connection with dialect of postgres specifying the database we are using
-//port for my database is 5433
-//database name is discover
 const sequelize = new Sequelize(
   `postgres://postgres:password@localhost:5432/cyglera-api-server`,
   { dialect: "postgres" }
