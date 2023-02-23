@@ -2,7 +2,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
 const sequelize = new Sequelize(
-  `postgres://postgres:password@localhost:5432/cyglera-api-server`,
+  `postgres://postgres:ilovemyself..@localhost:5432/cyglera-api-server`,
   { dialect: "postgres" }
 );
 

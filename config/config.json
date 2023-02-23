@@ -1,6 +1,6 @@
 {
   "username": "postgres",
-  "password": "password",
+  "password": "ilovemyself..",
   "database": "cyglera-api-server",
   "host": "127.0.0.1",
   "dialect": "postgres",
