@@ -72,8 +72,5 @@ module.exports = (sequelize, DataTypes) => {
     },
     { timestamps: true }
   );
-  Client.associate = function (models) {
-    models.Client.belongsTo(models.User);
-  };
   return Client;
 };

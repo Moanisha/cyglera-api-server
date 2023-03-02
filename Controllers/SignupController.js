@@ -1,11 +1,23 @@
 const { encryptPwd } = require("../util/cryptFunc");
-const db = require("../Model");
-const { sequelize } = require("../Model");
+const models = require("../models");
+const { sequelize } = require("../models");
 
-const User = db.users;
-const Dietician = db.dieticians;
-const Client = db.clients;
-
+const User = models.User;
+const Dietician = models.Dietician;
+const Client = models.Client;
+const Trainer = models.Trainer;
+const Physician = models.Physician;
+const CareProvider = models.CareProvider;
+const availableSlots = [
+  "9:00AM - 10:00AM",
+  "10:00AM - 11:00AM",
+  "11:00AM - 12:00PM",
+  "12:00PM - 1:00PM",
+  "2:00PM - 3:00PM",
+  "3:00PM - 4:00PM",
+  "4:00PM - 5:00PM",
+  "5:00PM - 6:00PM",
+];
 const SignupController = async (req, res) => {
   const {
     email,
@@ -37,7 +49,6 @@ const SignupController = async (req, res) => {
     dietHabits,
     goals,
   } = req.body;
-  console.log(languages);
   try {
     const result = await sequelize.transaction(async (t) => {
       //now hash pwd
@@ -81,6 +92,7 @@ const SignupController = async (req, res) => {
               areaOfFocus,
               professionalSummary,
               professionalApproach,
+              availableSlots,
             },
             { transaction: t }
           );
@@ -99,6 +111,60 @@ const SignupController = async (req, res) => {
               dailyActivityLevel,
               dietHabits,
               goals,
+            },
+            { transaction: t }
+          );
+        } else if (userRole == "TRAINER") {
+          let UserId = createUser.id;
+          await Trainer.create(
+            {
+              UserId,
+              height,
+              weight,
+              languages,
+              yearsOfExperience,
+              education,
+              occupation,
+              areaOfFocus,
+              professionalSummary,
+              professionalApproach,
+              availableSlots,
+            },
+            { transaction: t }
+          );
+        } else if (userRole == "PHYSICIAN") {
+          let UserId = createUser.id;
+          await Physician.create(
+            {
+              UserId,
+              height,
+              weight,
+              languages,
+              yearsOfExperience,
+              education,
+              occupation,
+              areaOfFocus,
+              professionalSummary,
+              professionalApproach,
+              availableSlots,
+            },
+            { transaction: t }
+          );
+        } else if (userRole == "CAREPROVIDER") {
+          let UserId = createUser.id;
+          await CareProvider.create(
+            {
+              UserId,
+              height,
+              weight,
+              languages,
+              yearsOfExperience,
+              education,
+              occupation,
+              areaOfFocus,
+              professionalSummary,
+              professionalApproach,
+              availableSlots,
             },
             { transaction: t }
           );

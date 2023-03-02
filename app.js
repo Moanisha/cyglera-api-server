@@ -5,7 +5,7 @@ const dotenv = require("dotenv").config();
 const cookieParser = require("cookie-parser");
 
 const cors = require("cors");
-const db = require("./Model");
+const db = require("./models");
 
 //adminCheck and canteenCheck checks the role(admin/dietician/trainer) in req.userObj
 const authCheck = require("./Middlewares/authCheck");
@@ -13,7 +13,7 @@ const dieticianCheck = require("./Middlewares/dieticianCheck");
 const trainerCheck = require("./Middlewares/trainerCheck");
 
 const authRoutes = require("./routes/authRoutes");
-const dieticianRoutes = require("./routes/dieticianRoutes");
+const appointmentRoutes = require("./Routes/appointmentRoutes");
 
 //setting up your port
 const PORT = process.env.PORT || 8080;
@@ -32,7 +32,7 @@ db.sequelize.sync({ force: false, alter: true }).then(() => {
   console.log("db has been re sync");
 });
 app.use("/api/auth", authRoutes);
-app.use("/api/dietician", authCheck, dieticianCheck, dieticianRoutes);
+app.use("/api/appointment", authCheck, appointmentRoutes);
 
 app.get("/", (req, res) => {
   res.send({ msg: "Welcome to App" });
