@@ -25,6 +25,7 @@ const SigninController = async (req, res) => {
     }
     //userFound,now send jwt
     const payload = {
+      id: userFound.dataValues.id,
       email: userFound.dataValues.email,
       firstName: userFound.dataValues.firstName,
       userRole: userFound.dataValues.userRole,

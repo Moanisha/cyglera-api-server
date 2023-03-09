@@ -27,16 +27,19 @@ module.exports = (sequelize, DataTypes) => {
       },
       relatedFrom: {
         allowNull: false,
-        type: DataTypes.STRING,
-        isEmail: true,
+        type: DataTypes.INTEGER,
       },
       relatedTo: {
         allowNull: false,
-        type: DataTypes.STRING,
-        isEmail: true,
+        type: DataTypes.INTEGER,
       },
     },
     { timestamps: true }
   );
+  Appointment.associate = function (models) {
+    Appointment.belongsTo(models.User, {
+      foreignKey: "relatedTo",
+    });
+  };
   return Appointment;
 };

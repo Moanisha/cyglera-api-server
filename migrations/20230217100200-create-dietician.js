@@ -52,6 +52,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
+      availableSlots: {
+        allowNull: true,
+        type: Sequelize.JSON,
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
