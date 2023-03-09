@@ -16,6 +16,38 @@ module.exports = {
           key: "id",
         },
       },
+      DieticianId: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Dieticians",
+          key: "id",
+        },
+      },
+      PhysicianId: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Physicians",
+          key: "id",
+        },
+      },
+      TrainerId: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Trainers",
+          key: "id",
+        },
+      },
+      CareProviderId: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "CareProviders",
+          key: "id",
+        },
+      },
       height: {
         allowNull: true,
         type: Sequelize.DOUBLE,
