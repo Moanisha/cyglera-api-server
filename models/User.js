@@ -68,5 +68,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     { timestamps: true }
   );
+  User.associate = function (models) {
+    User.hasMany(models.Appointment);
+    User.hasOne(models.Dietician, {
+      foreignKey: "UserId",
+    });
+  };
   return User;
 };

@@ -1,7 +1,7 @@
 //Dietician model
 module.exports = (sequelize, DataTypes) => {
-  const Dietician = sequelize.define(
-    "Dietician",
+  const CareProvider = sequelize.define(
+    "CareProvider",
     {
       id: {
         allowNull: false,
@@ -49,11 +49,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.TEXT,
       },
+      availableSlots: {
+        allowNull: true,
+        type: DataTypes.JSON,
+      },
     },
     { timestamps: true }
   );
-  Dietician.associate = function (models) {
-    models.Dietician.belongsTo(models.User);
+  CareProvider.associate = function (models) {
+    CareProvider.belongsTo(models.User, {
+      foreignKey: "UserId",
+    });
+    CareProvider.hasMany(models.Client);
   };
-  return Dietician;
+  return CareProvider;
 };

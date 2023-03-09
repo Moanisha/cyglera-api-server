@@ -49,11 +49,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.TEXT,
       },
+      availableSlots: {
+        allowNull: true,
+        type: DataTypes.JSON,
+      },
     },
     { timestamps: true }
   );
   Physician.associate = function (models) {
-    models.Physician.belongsTo(models.User);
+    Physician.belongsTo(models.User, {
+      foreignKey: "UserId",
+    });
+    Physician.hasMany(models.Client);
   };
   return Physician;
 };

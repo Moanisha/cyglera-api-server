@@ -1,11 +1,11 @@
 const { decryptPwd } = require("../util/cryptFunc");
 const { signToken } = require("../util/jwtFunc");
-const db = require("../Model");
+const models = require("../models");
+const User = models.User;
 
-const User = db.users;
+// const User = db.users;
 const SigninController = async (req, res) => {
   const { password, email } = req.body;
-  console.log(email);
   try {
     //check whetehr user with email exists
     const userFound = await User.findOne({ where: { email } });
