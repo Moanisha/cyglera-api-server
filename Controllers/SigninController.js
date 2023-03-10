@@ -9,8 +9,6 @@ const SigninController = async (req, res) => {
   try {
     //check whetehr user with email exists
     const userFound = await User.findOne({ where: { email } });
-
-    console.log(userFound);
     if (!userFound) {
       return res
         .status(400)

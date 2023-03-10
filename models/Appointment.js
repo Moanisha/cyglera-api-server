@@ -39,6 +39,11 @@ module.exports = (sequelize, DataTypes) => {
   Appointment.associate = function (models) {
     Appointment.belongsTo(models.User, {
       foreignKey: "relatedTo",
+      as: "relatedToUser",
+    });
+    Appointment.belongsTo(models.User, {
+      foreignKey: "relatedFrom",
+      as: "relatedFromUser",
     });
   };
   return Appointment;

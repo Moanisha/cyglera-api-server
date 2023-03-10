@@ -27,7 +27,6 @@ exports.fetchUsers = async (req, res) => {
         include: [User],
       });
     }
-    //const emails = dieticians.map((dietician) => dietician.User.email);
 
     if (!roleUsers || roleUsers.length < 1) {
       return res.send({ type: "success", msg: "No roleUsers found", data: [] });
