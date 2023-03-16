@@ -22,7 +22,6 @@ exports.createAppointment = async (req, res) => {
     newSlots,
     roleId,
   } = req.body;
-  console.log(values, videoLink, description, relatedFrom, relatedTo, newSlots);
   const userFound = await User.findOne({ where: { id: relatedFrom } });
   try {
     const result = await sequelize.transaction(async (t) => {
@@ -80,6 +79,108 @@ exports.createAppointment = async (req, res) => {
               statusMessage: `Cannot update Client details!`,
             };
           }
+        } else if (values.userRole == "TRAINER") {
+          let updatedTrainer = await Trainer.update(
+            {
+              availableSlots: newSlots,
+            },
+            {
+              where: {
+                UserId: relatedTo,
+              },
+            }
+          );
+          let updatedUser = await Client.update(
+            {
+              TrainerId: roleId,
+              updatedAt: new Date(),
+            },
+            {
+              where: {
+                UserId: relatedFrom,
+              },
+            }
+          );
+          if (updatedUser && updatedTrainer) {
+            responseBody = {
+              statusCode: 200,
+              statusMessage: "Client details updated successfully!",
+              updatedUser: updatedUser,
+            };
+          } else {
+            responseBody = {
+              statusCode: 400,
+              statusMessage: `Cannot update Client details!`,
+            };
+          }
+        } else if (values.userRole == "PHYSICIAN") {
+          let updatedPhysician = await Trainer.update(
+            {
+              availableSlots: newSlots,
+            },
+            {
+              where: {
+                UserId: relatedTo,
+              },
+            }
+          );
+          let updatedUser = await Client.update(
+            {
+              PhysicianId: roleId,
+              updatedAt: new Date(),
+            },
+            {
+              where: {
+                UserId: relatedFrom,
+              },
+            }
+          );
+          if (updatedUser && updatedPhysician) {
+            responseBody = {
+              statusCode: 200,
+              statusMessage: "Client details updated successfully!",
+              updatedUser: updatedUser,
+            };
+          } else {
+            responseBody = {
+              statusCode: 400,
+              statusMessage: `Cannot update Client details!`,
+            };
+          }
+        } else if (values.userRole == "CAREPROVIDER") {
+          let updatedCareProvider = await CareProvider.update(
+            {
+              availableSlots: newSlots,
+            },
+            {
+              where: {
+                UserId: relatedTo,
+              },
+            }
+          );
+          let updatedUser = await Client.update(
+            {
+              CareProviderId: roleId,
+              updatedAt: new Date(),
+            },
+            {
+              where: {
+                UserId: relatedFrom,
+              },
+            }
+          );
+          if (updatedUser && updatedCareProvider) {
+            responseBody = {
+              statusCode: 200,
+              statusMessage: "Client details updated successfully!",
+              updatedUser: updatedUser,
+            };
+          } else {
+            responseBody = {
+              statusCode: 400,
+              statusMessage: `Cannot update Client details!`,
+            };
+          }
         }
       }
       res.send({
@@ -97,10 +198,11 @@ exports.fetchAppointments = async (req, res) => {
     var result;
 
     result = await Appointment.findAll({
-      include: [User],
+      include: [
+        { model: User, as: "relatedToUser" },
+        { model: User, as: "relatedFromUser" },
+      ],
     });
-
-    //const emails = dieticians.map((dietician) => dietician.User.email);
 
     if (!result || result.length < 1) {
       return res.send({ type: "success", msg: "No result found", data: [] });
@@ -116,41 +218,3 @@ exports.fetchAppointments = async (req, res) => {
     res.status(500).send({ msg: err.message, type: "error" });
   }
 };
-// const generateZoomLink = async (tomorrowFormatted, isoTime, subject) => {
-//   console.log(isoTime);
-//   // Replace this with your own Zoom API key and secret
-//   const zoomApiKey = "rhTMWr3yTZWDyHH79bD00A";
-//   const zoomApiSecret = "wL0k3bNK0I9MaTSJPO2MSbGUbCfDJ56CvaEU";
-//   // Set up the Zoom API request
-//   const apiUrl = "https://api.zoom.us/v2/users/me/meetings";
-//   const requestHeaders = {
-//     "content-type": "application/json",
-//     authorization: "",
-//   };
-//   const requestBody = {
-//     topic: subject,
-//     type: 2, // Scheduled meeting
-//     start_time: isoTime, // Format as ISO string
-//     duration: 60, // Meeting duration in minutes
-//     timezone: "UTC", // Timezone for the meeting start time
-//   };
-//   // Generate a signature for the Zoom API request
-//   // const timestamp = Date.now() - 30000; // Subtract 30 seconds to account for clock skew
-//   const message = `${zoomApiKey}${zoomApiSecret}${JSON.stringify(requestBody)}`;
-//   const hmac = crypto.createHmac("sha256", zoomApiSecret);
-//   hmac.update(message);
-//   const signature = hmac.digest("base64");
-//   requestHeaders.authorization = `Bearer ${zoomApiKey}.${signature}`;
-
-//   // Make the Zoom API request and retrieve the meeting URL
-//   try {
-//     const response = await axios.post(apiUrl, requestBody, {
-//       headers: requestHeaders,
-//     });
-//     const joinUrl = response.data.join_url;
-//     return joinUrl;
-//   } catch (error) {
-//     console.log(error);
-//     throw new Error("Unable to generate Zoom meeting link");
-//   }
-// };
