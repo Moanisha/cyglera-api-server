@@ -7,6 +7,10 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const db = require("./models");
 
+const models = require("./models");
+
+const Recipe = models.Recipe;
+
 //adminCheck and canteenCheck checks the role(admin/dietician/trainer) in req.userObj
 const authCheck = require("./Middlewares/authCheck");
 const dieticianCheck = require("./Middlewares/dieticianCheck");
@@ -38,5 +42,12 @@ app.get("/", (req, res) => {
   res.send({ msg: "Welcome to App" });
 });
 
+//route to add recipe details
+app.post("/addRecipe",async(req, res)=>{
+	const formData = req.body;
+	console.log(formData);
+	await Recipe.create(formData);
+	await res.send("true");
+});
 //listening to server connection
 app.listen(PORT, () => console.log(`Server is connected on ${PORT}`));
