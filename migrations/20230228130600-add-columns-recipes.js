@@ -12,7 +12,7 @@ module.exports = {
     });
     await queryInterface.addColumn("Recipes", "imgUrl", {
       allowNull: true,
-      type: Sequelize.STRING,
+      type: Sequelize.BYTEA,
     });
     await queryInterface.addColumn("Recipes", "prepTime", {
       allowNull: false,

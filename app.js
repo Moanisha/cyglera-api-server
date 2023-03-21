@@ -4,10 +4,16 @@ const sequelize = require("sequelize");
 const dotenv = require("dotenv").config();
 const cookieParser = require("cookie-parser");
 
+// const multer = require('multer');
+// const fs = require('fs');
+// const upload = multer({ dest: 'uploads/' }); // specify the directory to store the uploaded files
+
 const cors = require("cors");
 const db = require("./models");
+
 const models = require("./models");
-const Profile = models.Users;
+
+const Recipe = models.Recipe;
 
 //adminCheck and canteenCheck checks the role(admin/dietician/trainer) in req.userObj
 const authCheck = require("./Middlewares/authCheck");
@@ -41,5 +47,99 @@ app.get("/", (req, res) => {
 });
 
 
+
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'public/images');
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now() + '-' + file.originalname);
+//   },
+// });
+
+// const upload = multer({ storage: storage });
+
+
+// app.post('/addRecipe', upload.single('imgUrl'), async (req, res) => {
+//   const fileData = req.file;
+//   const {
+//     userName,
+//     email,
+//     recipeName,
+//     summary,
+//     ingredients,
+//     instructions,
+//     benefits,
+//     prepTime,
+//     cookTime,
+//     totalTime,
+//     carbohydrates,
+//     calories,
+//     protein,
+//     fat,
+//     courses,
+//     cuisines,
+//   } = req.body;
+
+//   // const imgBuffer = fs.readFileSync(req.file.path);
+//   try {
+//     const recipe = await Recipe.create({
+//       userName,
+//       email,
+//       recipeName,
+//       summary,
+//       imgUrl: fileData,
+//       ingredients,
+//       instructions,
+//       benefits,
+//       prepTime,
+//       cookTime,
+//       totalTime,
+//       carbohydrates,
+//       calories,
+//       protein,
+//       fat,
+//       courses,
+//       cuisines,
+//     });
+
+//     res.status(201).json({ success: true, recipe });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ success: false, error: 'Server error' });
+//   }
+
+  
+// })
+
+
+// // 
+//route to add recipe details
+app.post("/addRecipe", async(req, res)=>{
+	const formData = req.body;
+//   // const {
+//   //   userName,
+//   //   email,
+//   //   recipeName,
+//   //   summary,
+//   //   ingredients,
+//   //   instructions,
+//   //   benefits,
+//   //   prepTime,
+//   //   cookTime,
+//   //   totalTime,
+//   //   carbohydrates,
+//   //   calories,
+//   //   protein,
+//   //   fat,
+//   //   courses,
+//   //   cuisines,
+//   // } = req.body;
+
+//   // const imgData = req.file.buffer; // get the image data from the uploaded file
+	console.log(formData);
+	// await Recipe.create(formData);
+	await res.send("true");
+});
 //listening to server connection
 app.listen(PORT, () => console.log(`Server is connected on ${PORT}`));
