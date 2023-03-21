@@ -98,5 +98,3 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Recipe;
 };
-
-    
