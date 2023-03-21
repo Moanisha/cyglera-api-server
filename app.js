@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 
 const cors = require("cors");
 const db = require("./models");
+const models = require("./models");
+const Profile = models.Users;
 
 //adminCheck and canteenCheck checks the role(admin/dietician/trainer) in req.userObj
 const authCheck = require("./Middlewares/authCheck");
@@ -37,6 +39,7 @@ app.use("/api/appointment", authCheck, appointmentRoutes);
 app.get("/", (req, res) => {
   res.send({ msg: "Welcome to App" });
 });
+
 
 //listening to server connection
 app.listen(PORT, () => console.log(`Server is connected on ${PORT}`));

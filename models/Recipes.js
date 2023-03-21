@@ -8,10 +8,9 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             type: DataTypes.INTEGER,
           },
-          name: {
-            allowNull: false,
+          userName: {
+            allowNull: true,
             type: DataTypes.STRING,
-            unique: true,
           },
           DieticianId: {
             allowNull: true,
