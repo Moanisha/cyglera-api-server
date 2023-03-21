@@ -39,7 +39,7 @@ app.use(cors({ origin: "*" }));
 db.sequelize.sync({ force: false, alter: true }).then(() => {
   console.log("db has been re sync");
 });
-app.use("/api/auth", authRoutes);
+app.use("/api/auth/", authRoutes);
 app.use("/api/appointment", authCheck, appointmentRoutes);
 
 app.get("/", (req, res) => {
@@ -117,29 +117,10 @@ app.get("/", (req, res) => {
 //route to add recipe details
 app.post("/addRecipe", async(req, res)=>{
 	const formData = req.body;
-//   // const {
-//   //   userName,
-//   //   email,
-//   //   recipeName,
-//   //   summary,
-//   //   ingredients,
-//   //   instructions,
-//   //   benefits,
-//   //   prepTime,
-//   //   cookTime,
-//   //   totalTime,
-//   //   carbohydrates,
-//   //   calories,
-//   //   protein,
-//   //   fat,
-//   //   courses,
-//   //   cuisines,
-//   // } = req.body;
-
-//   // const imgData = req.file.buffer; // get the image data from the uploaded file
 	console.log(formData);
-	// await Recipe.create(formData);
+	await Recipe.create(formData);
 	await res.send("true");
 });
+
 //listening to server connection
 app.listen(PORT, () => console.log(`Server is connected on ${PORT}`));
