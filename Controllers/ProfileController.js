@@ -11,6 +11,8 @@ const CareProvider = models.CareProvider;
 
 
 const ProfileController = async (req, res) => {
+
+    console.log("inside profiel controller");
     
     // Define the fields to update on user table
     const fieldsToUpdateUserTable = ['firstName', 'lastName', 'email','address','addressLine2','city','country','province','postalCode','phone','gender'];
