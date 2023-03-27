@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
+      appointmentDate: {
+        allowNull: true,
+        type: DataTypes.DATEONLY,
+      },
     },
     { timestamps: true }
   );
