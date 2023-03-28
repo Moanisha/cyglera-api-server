@@ -21,7 +21,7 @@ const authCheck = require("./Middlewares/authCheck");
 const dieticianCheck = require("./Middlewares/dieticianCheck");
 const trainerCheck = require("./Middlewares/trainerCheck");
 
-const authRoutes = require("./routes/authRoutes");
+const authRoutes = require("./Routes/authRoutes");
 const appointmentRoutes = require("./Routes/appointmentRoutes");
 
 //setting up your port
