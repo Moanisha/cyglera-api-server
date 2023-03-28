@@ -2,6 +2,7 @@ const { encryptPwd } = require("../util/cryptFunc");
 const crypto = require("crypto");
 const { sequelize } = require("../models");
 const axios = require("axios");
+const jwt = require("jsonwebtoken");
 const models = require("../models");
 
 const User = models.User;
@@ -21,6 +22,7 @@ exports.createAppointment = async (req, res) => {
     relatedTo,
     newSlots,
     roleId,
+    tomorrowFormatted,
   } = req.body;
   const userFound = await User.findOne({ where: { id: relatedFrom } });
   try {
@@ -32,10 +34,11 @@ exports.createAppointment = async (req, res) => {
           timeSlot: values.slot,
           role: values.role,
           videoLink:
-            "zoommtg://zoom.us/join?confno=8529015944&pwd=888999&uname=mick",
+            "https://us04web.zoom.us/j/4893544276?pwd=RyIPtUouTRVffhBdBtvz53rKmEtCMl.1",
           description: "",
           relatedFrom,
           relatedTo,
+          appointmentDate: tomorrowFormatted,
         },
         { transaction: t }
       );
