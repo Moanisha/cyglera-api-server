@@ -12,6 +12,7 @@ const cors = require("cors");
 const db = require("./models");
 
 const models = require("./models");
+const cron = require("./cron"); // assuming that the file is in the same directory as app.js
 
 const Recipe = models.Recipe;
 
@@ -46,8 +47,6 @@ app.get("/", (req, res) => {
   res.send({ msg: "Welcome to App" });
 });
 
-
-
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
 //     cb(null, 'public/images');
@@ -58,7 +57,6 @@ app.get("/", (req, res) => {
 // });
 
 // const upload = multer({ storage: storage });
-
 
 // app.post('/addRecipe', upload.single('imgUrl'), async (req, res) => {
 //   const fileData = req.file;
@@ -109,19 +107,18 @@ app.get("/", (req, res) => {
 //     res.status(500).json({ success: false, error: 'Server error' });
 //   }
 
-  
 // })
 
-
-// // 
+// //
 //route to add recipe details
-app.post("/addRecipe", async(req, res)=>{
-	const formData = req.body;
-	console.log(formData);
-	await Recipe.create(formData);
-	await res.send("true");
+app.post("/addRecipe", async (req, res) => {
+  const formData = req.body;
+  console.log(formData);
+  await Recipe.create(formData);
+  await res.send("true");
 });
 
-
+// Call the function to initialize the cron job
+cron.start();
 //listening to server connection
 app.listen(PORT, () => console.log(`Server is connected on ${PORT}`));
