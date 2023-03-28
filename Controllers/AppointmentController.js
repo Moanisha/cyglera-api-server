@@ -13,6 +13,32 @@ const CareProvider = models.CareProvider;
 const Client = models.Client;
 const Appointment = models.Appointment;
 
+exports.editAppointment = async (req, res) => {
+  const { videoLink } = req.body;
+  const id = req.params.id;
+  try {
+    const result = await Appointment.update(
+      { videoLink: videoLink },
+      { where: { id: id } }
+    );
+
+    if (result[0] === 0) {
+      return res
+        .status(404)
+        .send({ type: "error", msg: "Appointment not found" });
+    }
+
+    return res
+      .status(200)
+      .send({ type: "success", msg: "Appointment updated successfully" });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .send({ type: "error", msg: "Error updating appointment" });
+  }
+};
+
 exports.createAppointment = async (req, res) => {
   const {
     values,
@@ -33,8 +59,6 @@ exports.createAppointment = async (req, res) => {
           subject: values.subject,
           timeSlot: values.slot,
           role: values.role,
-          videoLink:
-            "https://us04web.zoom.us/j/4893544276?pwd=RyIPtUouTRVffhBdBtvz53rKmEtCMl.1",
           description: "",
           relatedFrom,
           relatedTo,
