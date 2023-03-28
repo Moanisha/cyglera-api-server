@@ -32,7 +32,7 @@ const ProfileController = async (req, res) => {
             if (userRole != "CLIENT") {
                  const userId = userFound.dataValues.id;
                  console.log(userId);
-                 const fieldsToUpdateUserRoleTable = ['UserId', 'title', 'middleName', 'martialStatus','familyPhysician', 'yearsOfExperience', 'areaOfFocus', 'professionalSummary','professionalApproach', 'billingAddressLine1', 'billingAddressLine2', 'billingCity','billingCountry', 'billingProvince', 'billingPostalCode', 'billingPhone','shippingAddressLine1','shippingAddressLine2','shippingCity','shippingCountry','shippingProvince','shippingPostalCode','shippingPhone'];
+                 const fieldsToUpdateUserRoleTable = ['UserId', 'title', 'middleName', 'martialStatus','familyPhysician', 'yearsOfExperience', 'areaOfFocus', 'professionalSummary','professionalApproach', 'availableSlots','billingAddressLine1', 'billingAddressLine2', 'billingCity','billingCountry', 'billingProvince', 'billingPostalCode', 'billingPhone','shippingAddressLine1','shippingAddressLine2','shippingCity','shippingCountry','shippingProvince','shippingPostalCode','shippingPhone'];
                  const tableUserRoleUpdates = {};
                  
                  // Iterating to find fields need to updated from client
